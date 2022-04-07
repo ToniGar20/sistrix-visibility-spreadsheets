@@ -8,11 +8,11 @@ const HEADERS = {
   'Accept-Encoding': 'gzip, deflate, br',
   'Connection': 'keep-alive'
 };
-const DOMAIN_VISIBILITY = `https://api.sistrix.com/domain.sichtbarkeitsindex?format=json&api_key=${APIKEY}&mobile=true&domain=`;
-const HOST_VISIBILITY = `https://api.sistrix.com/domain.sichtbarkeitsindex?format=json&api_key=${APIKEY}&mobile=true&host=`;
+const DOMAIN_VISIBILITY = `https://api.sistrix.com/domain.sichtbarkeitsindex?format=json&api_key=${API_KEY}&mobile=true&domain=`;
+const HOST_VISIBILITY = `https://api.sistrix.com/domain.sichtbarkeitsindex?format=json&api_key=${API_KEY}&mobile=true&host=`;
 
 /**
- * DEFINED FUNCTIONS
+ * ############################################################### DEFINED FUNCTIONS ###############################################################
  */
 
 // Date parse to YYYY-MM-DD
@@ -25,6 +25,23 @@ function convertDate(date) {
   let ddChars = dd.split('');
 
   return yyyy + '-' + (mmChars[1]?mm:"0"+mmChars[0]) + '-' + (ddChars[1]?dd:"0"+ddChars[0]);
+}
+
+function checkUrl(host) {
+  let hostHolder = host.split(".")
+  let country = hostHolder[hostHolder.length - 1].split("/")[0];
+
+  let visibilityUrl;
+
+  if(hostHolder.length == 2){
+    visibilityUrl = DOMAIN_VISIBILITY + `${host}&country=${country}`;
+    Logger.log(visibilityUrl);
+  } else {
+    visibilityUrl = HOST_VISIBILITY + `${host}&country=${country}`;
+    Logger.log(visibilityUrl);
+  }
+
+  return visibilityUrl
 }
 
 // Fetch of Sistrix's API endpointS
@@ -48,107 +65,58 @@ function sistrixDataProcessing(a) {
 
 
 /**
- * VISIBILITY VALUE FUNCTIONS FOR GOOGLE SPREADSHEET
- * Today, yesterday, week over week, month over month and year over year values 
+ * ############################################################### MAIN FUNCTIONS ###############################################################
+ * VISIBILITY FUNCTIONS FOR GOOGLE SPREADSHEET
  */
 
 function todayVisibility(host){
-  let hostHolder = host.split(".")
-  let country = hostHolder[hostHolder.length - 1].split("/")[0];
 
-  let visibilityUrl;
-
-  if(hostHolder.length == 2){
-    visibilityUrl = DOMAIN_VISIBILITY + `${host}&country=${country}`;
-    Logger.log(visibilityUrl);
-  } else {
-    visibilityUrl = HOST_VISIBILITY + `${host}&country=${country}`;
-    Logger.log(visibilityUrl);
-  }
-
+  let visibilityUrl = checkUrl(host);
   let data = sistrixApiFetch(visibilityUrl);
   return sistrixDataProcessing(data);
 
 }
 
-
 function yesterdayVisibility(host) {
-  let hostHolder = host.split(".");
-  let country = hostHolder[hostHolder.length - 1].split("/")[0];
 
   let yesterday = new Date();
   yesterday.setDate(yesterday.getDate() - 1);
   let yesterdayDate = convertDate(yesterday);
 
-  let visibilityUrl;
-
-  if(hostHolder.length == 2){
-    visibilityUrl = DOMAIN_VISIBILITY + `${host}&country=${country}&date=${yesterdayDate}`;
-  } else {
-    visibilityUrl = HOST_VISIBILITY + `${host}&country=${country}&date=${yesterdayDate}`;
-  }
-
+  let visibilityUrl = checkUrl(host)+ `&date=${yesterdayDate}`;
   let data = sistrixApiFetch(visibilityUrl);
   return sistrixDataProcessing(data);
-
 }
 
 function wowVisibility(host) {
-  let hostHolder = host.split(".");
-  let country = hostHolder[hostHolder.length - 1].split("/")[0];
 
   let previousWeekDay = new Date();
   previousWeekDay.setDate(previousWeekDay.getDay() - 7);
   let previousWeekDate = convertDate(previousWeekDay);
 
-  let visibilityUrl;
-
-  if(hostHolder.length == 2){
-    visibilityUrl = DOMAIN_VISIBILITY + `${host}&country=${country}&date=${previousWeekDate}`;
-  } else {
-    visibilityUrl = HOST_VISIBILITY + `${host}&country=${country}&date=${previousWeekDate}`;
-  }
-
+  let visibilityUrl = checkUrl(host) + `&date=${previousWeekDate}`;
   let data = sistrixApiFetch(visibilityUrl);
   return sistrixDataProcessing(data);
 }
 
 function momVisibility(host) {
-  let hostHolder = host.split(".");
-  let country = hostHolder[hostHolder.length - 1].split("/")[0];
 
   let previousMonthDay = new Date();
   previousMonthDay.setMonth(previousMonthDay.getMonth() - 1);
   let previousMonthDate = convertDate(previousMonthDay);
 
-  let visibilityUrl;
-
-  if(hostHolder.length == 2){
-    visibilityUrl = DOMAIN_VISIBILITY + `${host}&country=${country}&date=${previousMonthDate}`;
-  } else {
-    visibilityUrl = HOST_VISIBILITY + `${host}&country=${country}&date=${previousMonthDate}`;
-  }
-
+  let visibilityUrl = checkUrl(host) + `&date=${previousMonthDate}`;
   let data = sistrixApiFetch(visibilityUrl);
   return sistrixDataProcessing(data);
 }
 
 function yoyVisibility(host) {
-  let hostHolder = host.split(".");
-  let country = hostHolder[hostHolder.length - 1].split("/")[0];
 
   let previousYearDay = new Date();
   previousYearDay.setDate(previousYearDay.getDay() - 365);
   let previousYearDate = convertDate(previousYearDay);
 
-  let visibilityUrl;
-
-  if(hostHolder.length == 2){
-    visibilityUrl = DOMAIN_VISIBILITY + `${host}&country=${country}&date=${previousYearDate}`;
-  } else {
-    visibilityUrl = HOST_VISIBILITY + `${host}&country=${country}&date=${previousYearDate}`;
-  }
-
+  let visibilityUrl = checkUrl(host) + `&date=${previousYearDate}`;
   let data = sistrixApiFetch(visibilityUrl);
   return sistrixDataProcessing(data);
 }
