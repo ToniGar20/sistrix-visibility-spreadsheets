@@ -1,7 +1,8 @@
 # SISTRIX Visibility Scripts for Google SpreadSheets
-SISTRIX tool main page: https://www.sistrix.com/
+Do you check the SEO performance of the website daily or weekly? Do you use Sistrix visbility indicator to know easily and fast how is your website organic ranks? Or maybe your competitors one? With these scripts your can easily display the data into a Google spreedsheet to follow it, compare, analyze or whatever. 
 
-The use of this scripts requires a paid license of the tool
+SISTRIX tool main page: https://www.sistrix.com/
+**The use of this scripts requires a paid license of the tool**
 
 ## What is visibility index?
 
