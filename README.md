@@ -1,5 +1,6 @@
 # SISTRIX Visibility Scripts for Google SpreadSheets
 SISTRIX tool main page: https://www.sistrix.com/
+
 The use of this scripts requires a paid license of the tool
 
 ## What is visibility index?
