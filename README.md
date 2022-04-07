@@ -20,3 +20,7 @@ The SISTRIX visibility index measures the success of each website in Google sear
 
 ### SISTRIX's API documentation
 https://www.sistrix.com/api/
+
+### Example for habitissimo
+
+![example](https://raw.githubusercontent.com/ToniGar20/sistrix-visibility-spreadsheets/master/stuff/example.png)
