@@ -1,14 +1,15 @@
 /**
  * CONSTANTS
  */
+const APIKEY = 'YOUR_APIKEY_GOES_HERE';
 const HEADERS = {
   'User-agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.90 Safari/537.36',
   'Accept': '*/*',
   'Accept-Encoding': 'gzip, deflate, br',
   'Connection': 'keep-alive'
 };
-const DOMAIN_VISIBILITY = 'https://api.sistrix.com/domain.sichtbarkeitsindex?format=json&api_key=5GXancTFFDxYdq5f9kXqSH2weUE4He9g&mobile=true&domain=';
-const HOST_VISIBILITY = 'https://api.sistrix.com/domain.sichtbarkeitsindex?format=json&api_key=5GXancTFFDxYdq5f9kXqSH2weUE4He9g&mobile=true&host=';
+const DOMAIN_VISIBILITY = `https://api.sistrix.com/domain.sichtbarkeitsindex?format=json&api_key=${APIKEY}&mobile=true&domain=`;
+const HOST_VISIBILITY = `https://api.sistrix.com/domain.sichtbarkeitsindex?format=json&api_key=${APIKEY}&mobile=true&host=`;
 
 /**
  * DEFINED FUNCTIONS
