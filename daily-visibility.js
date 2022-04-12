@@ -71,7 +71,10 @@ function sistrixDataProcessing(a) {
 
 function todayVisibility(host){
 
-  let visibilityUrl = checkUrl(host);
+  let today = new Date();
+  let todayDate = convertDate(today);
+
+  let visibilityUrl = checkUrl(host) + `&date=${todayDate}`;
   let data = sistrixApiFetch(visibilityUrl);
   return sistrixDataProcessing(data);
 
