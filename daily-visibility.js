@@ -94,7 +94,7 @@ function yesterdayVisibility(host) {
 function wowVisibility(host) {
 
   let previousWeekDay = new Date();
-  previousWeekDay.setDate(previousWeekDay.getDay() - 7);
+  previousWeekDay.setDate(previousWeekDay.getDate() - 7);
   let previousWeekDate = convertDate(previousWeekDay);
 
   let visibilityUrl = checkUrl(host) + `&date=${previousWeekDate}`;
